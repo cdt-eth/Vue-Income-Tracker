@@ -1,23 +1,18 @@
 <template>
   <!-- 2) passing total income as a prop -->
   <Header :totalIncome="state.totalIncome" />
+  <Form />
 </template>
 
 <script>
 import { reactive, computed } from "vue";
 import Header from "./components/Header";
+import Form from "./components/Form";
 
 export default {
   setup() {
     const state = reactive({
-      income: [
-        {
-          value: 400,
-        },
-        {
-          value: 500,
-        },
-      ],
+      income: [],
       totalIncome: computed(() => {
         let temp = 0;
 
@@ -37,6 +32,7 @@ export default {
     // 1) what we return here will be usable in our templates
     return {
       Header,
+      Form,
       state,
     };
   },
