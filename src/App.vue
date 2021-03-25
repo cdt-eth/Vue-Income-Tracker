@@ -6,12 +6,14 @@
   <Form @add-income="AddIncome" />
   <!-- either of these two work -->
   <!-- <Form v-on:add-income="AddIncome" /> -->
+  <IncomeList :state="state" />
 </template>
 
 <script>
 import { reactive, computed } from "vue";
 import Header from "./components/Header";
 import Form from "./components/Form";
+import IncomeList from "./components/IncomeList";
 
 export default {
   setup() {
@@ -60,6 +62,7 @@ export default {
       Form,
       state,
       AddIncome,
+      IncomeList,
     };
   },
 };
