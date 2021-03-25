@@ -1,7 +1,11 @@
 <template>
   <!-- 2) passing total income as a prop -->
   <Header :totalIncome="state.totalIncome" />
-  <Form />
+
+  <!-- C) when we call this function it will take those props as params -->
+  <Form @add-income="AddIncome" />
+  <!-- either of these two work -->
+  <!-- <Form v-on:add-income="AddIncome" /> -->
 </template>
 
 <script>
@@ -29,11 +33,33 @@ export default {
       }),
     });
 
+    // D) which we're passing in as "data"
+    //  this data is what's being passed back up from our Form component
+    function AddIncome(data) {
+      // console.log(data);
+
+      let d = data.date.split("-");
+      let newD = new Date(d[0], d[1], d[2]);
+
+      // E) assing this func's "state.income variable" as "all" (spread operator) the income we have and the second param (the object) is the data we passed
+      state.income = [
+        ...state.income,
+        {
+          id: Date.now(),
+          desc: data.desc,
+          value: parseInt(data.value),
+          date: newD.getTime(),
+        },
+      ];
+      console.log(state.income);
+    }
+
     // 1) what we return here will be usable in our templates
     return {
       Header,
       Form,
       state,
+      AddIncome,
     };
   },
 };

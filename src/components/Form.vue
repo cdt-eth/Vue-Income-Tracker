@@ -1,14 +1,50 @@
 <template>
-  <form>
-    <input type="text" placeholder="Description" />
-    <input type="number" placeholder="Amount" />
-    <input type="date" placeholder="Date" />
+  <!-- <form v-on="submit"> -->
+  <form @submit.prevent="FormHandler">
+    <input type="text" placeholder="Description" v-model="formData.desc" />
+    <input type="number" placeholder="Amount" v-model="formData.value" />
+    <input type="date" placeholder="Date" v-model="formData.date" />
     <input type="submit" value="Submit" />
   </form>
 </template>
 
 <script>
-export default {};
+import { reactive } from "vue";
+
+export default {
+  props: {
+    state: Object,
+  },
+  // we'll get props down from parent
+  // A) emit allows us to pass events back up to parent
+  setup(props, { emit }) {
+    const formData = reactive({
+      desc: null,
+      value: null,
+      date: null,
+    });
+
+    function FormHandler() {
+      // console.log(formData);
+
+      // B) the second parameter, the object, is what we'll pass back up to our App component
+      emit("add-income", {
+        desc: formData.desc,
+        value: formData.value,
+        date: formData.date,
+      });
+
+      formData.desc = null;
+      formData.value = null;
+      formData.date = null;
+    }
+
+    return {
+      FormHandler,
+      formData,
+    };
+  },
+};
 </script>
 
 <style scoped>
